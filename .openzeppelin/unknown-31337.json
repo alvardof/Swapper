@@ -5,12 +5,17 @@
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
       "txHash": "0x22d2cd3f110e59bd4e9a579f8301967ad5a5b6a232a04c10657988dc8320460d",
       "kind": "uups"
+    },
+    {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0xc88b9910476ffc84ba041b6ffb37062383a066df1389715a75959112e22b2cfc",
+      "kind": "uups"
     }
   ],
   "impls": {
     "f69781ec0ac8b9e5c62a2820f31bb39277de54725e4d16f4100ffe247f7ada5a": {
-      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0xd3c965e6aea7779fac366a624059044f43b82dd914ef1ac8a7a7c9f4d0c9ee7e",
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0xa3012316589c048e6683a7c2bff5b2b2c0f93660385fb4f626965c4015ac1e85",
       "layout": {
         "storage": [
           {
@@ -89,7 +94,7 @@
             "label": "_itemIds",
             "offset": 0,
             "slot": "252",
-            "type": "t_struct(Counter)1688_storage",
+            "type": "t_struct(Counter)2207_storage",
             "contract": "SwapperV1",
             "src": "contracts/SwapperV1.sol:25"
           },
@@ -128,57 +133,73 @@
         ],
         "types": {
           "t_address": {
-            "label": "address"
+            "label": "address",
+            "numberOfBytes": "20"
           },
           "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]"
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
           },
           "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]"
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
           },
           "t_bool": {
-            "label": "bool"
+            "label": "bool",
+            "numberOfBytes": "1"
           },
           "t_bytes32": {
-            "label": "bytes32"
+            "label": "bytes32",
+            "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)"
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
           },
-          "t_struct(Counter)1688_storage": {
+          "t_struct(Counter)2207_storage": {
             "label": "struct Counters.Counter",
             "members": [
               {
                 "label": "_value",
-                "type": "t_uint256"
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
               }
-            ]
+            ],
+            "numberOfBytes": "32"
           },
           "t_struct(RoleData)34_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {
                 "label": "members",
-                "type": "t_mapping(t_address,t_bool)"
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
               },
               {
                 "label": "adminRole",
-                "type": "t_bytes32"
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
               }
-            ]
+            ],
+            "numberOfBytes": "64"
           },
           "t_uint256": {
-            "label": "uint256"
+            "label": "uint256",
+            "numberOfBytes": "32"
           }
         }
       }
     },
     "a3f64cc426a4b4f401eca0b88013b84c02f524b2f04fa7b640322a73e94314b6": {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-      "txHash": "0x3d162d7f9510c5d3aa083f612e409a1c45ce97c73edc99ad0b485b61d874bc76",
+      "txHash": "0x5877825a69a5748dc37e947edce9700c3390e9c58f11ce9872e3959c7722210f",
       "layout": {
         "storage": [
           {
@@ -296,50 +317,66 @@
         ],
         "types": {
           "t_address": {
-            "label": "address"
+            "label": "address",
+            "numberOfBytes": "20"
           },
           "t_array(t_uint256)49_storage": {
-            "label": "uint256[49]"
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
           },
           "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]"
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
           },
           "t_bool": {
-            "label": "bool"
+            "label": "bool",
+            "numberOfBytes": "1"
           },
           "t_bytes32": {
-            "label": "bytes32"
+            "label": "bytes32",
+            "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)"
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
           },
           "t_mapping(t_bytes32,t_struct(RoleData)34_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
           },
           "t_struct(Counter)1688_storage": {
             "label": "struct Counters.Counter",
             "members": [
               {
                 "label": "_value",
-                "type": "t_uint256"
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
               }
-            ]
+            ],
+            "numberOfBytes": "32"
           },
           "t_struct(RoleData)34_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {
                 "label": "members",
-                "type": "t_mapping(t_address,t_bool)"
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
               },
               {
                 "label": "adminRole",
-                "type": "t_bytes32"
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
               }
-            ]
+            ],
+            "numberOfBytes": "64"
           },
           "t_uint256": {
-            "label": "uint256"
+            "label": "uint256",
+            "numberOfBytes": "32"
           }
         }
       }

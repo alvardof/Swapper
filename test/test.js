@@ -1,9 +1,16 @@
+const { fixture } = deployments;
+const BigNumber = require("bignumber.js");
+const { printGas, tokens, toWei } = require("./utils");
+const { ParaSwap } = require("paraswap");
+const { SwapSide } = require("paraswap-core");
+const networkID = 137;
+const partner = "paraswap";
+const apiURL = "https://apiv5.paraswap.io";
+const slippage = 1; // 1%
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const axios = require("axios");
-
 const SwapperV1 = artifacts.require("SwapperV1");
-const SwapperV2 = artifacts.require("SwapperV2");
 const IBalancerRegistry = artifacts.require("IBalancerRegistry");
 const IUniswapV2Factory = artifacts.require("IUniswapV2Factory");
 const IERC20 = artifacts.require("IERC20");
@@ -17,10 +24,18 @@ const BALANCER_REGISTRY = "0x65e67cbc342712DF67494ACEfc06fe951EE93982";
 const UNI_FACTORY = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 
 // HELPERS
-const toWei = (value) => web3.utils.toWei(String(value));
 const fromWei = (value) => Number(web3.utils.fromWei(String(value)));
 
 const FEE = 100; // 0.1%
+
+
+function getToken(symbol) {
+  const token = tokens[networkID].find((t) => t.symbol === symbol);
+
+  if (!token)
+    throw new Error(`Token ${symbol} not available on network ${networkID}`);
+  return token;
+}
 
 
 contract("Swapper", ([user, feeRecipient]) => {
@@ -32,6 +47,8 @@ contract("Swapper", ([user, feeRecipient]) => {
     usdt = await IERC20.at(USDT_ADDRESS);
     balancer = await IBalancerRegistry.at(BALANCER_REGISTRY);
     factory = await IUniswapV2Factory.at(UNI_FACTORY);
+    [_owner, _user] = await ethers.getSigners();
+    
   });
 
   it("Should deploy proxy with V1", async function () {
@@ -66,73 +83,6 @@ contract("Swapper", ([user, feeRecipient]) => {
       fromWei(finalFeeRecipientBalance) > fromWei(intialFeeRecipientBalance)
     );
   });
-
-
-
-  it("Should upgrade to V2", async function () {
-    const SwapperV2Factory = await ethers.getContractFactory("SwapperV2");
-
-    const proxy = await upgrades.upgradeProxy(
-      swapper.address,
-      SwapperV2Factory
-    );
-    swapper = await SwapperV2.at(proxy.address);
-  });
-
-  it("Should swap 2 tokens using best dex", async function () {
-    const TOKENS = [DAI_ADDRESS, LINK_ADDRESS];
-    const AMOUNT = [0.3, 0.7];
-    const DISTRIBUTIONS = [3000, 7000];
-
-    const swaps = [];
-
-    for (let i = 0; i < TOKENS.length; i++) {
-      const token = TOKENS[i];
-      const amount = AMOUNT[i];
-      const distribution = DISTRIBUTIONS[i];
-
-      const { data } = await axios.get(
-        `https://api.1inch.exchange/v3.0/1/quote?fromTokenAddress=${WETH_ADDRESS}&toTokenAddress=${token}&amount=${toWei(
-          amount
-        )}&protocols=UNISWAP_V2,BALANCER`
-      );
-
-      let swapData;
-
-      if (data.protocols[0][0][0].name === "UNISWAP_V2") {
-        const pool = await factory.getPair(WETH_ADDRESS, token);
-        swapData = { token, pool, distribution, dex: 0 };
-      } else {
-        const pools = await balancer.getBestPoolsWithLimit(
-          WETH_ADDRESS,
-          token,
-          1
-        );
-        swapData = { token, pool: pools[0], distribution, dex: 1 };
-      }
-
-      swaps.push(swapData);
-    }
-
-    const intialFeeRecipientBalance = await web3.eth.getBalance(feeRecipient);
-
-    const tx = await swapper.swapMultiple(swaps, {
-      value: toWei(1),
-    });
-
-    const balanceDAI = await dai.balanceOf(user);
-    const balanceLINK = await link.balanceOf(user);
-    const contractBalance = await web3.eth.getBalance(swapper.address);
-    const finalFeeRecipientBalance = await web3.eth.getBalance(feeRecipient);
-
-    assert.notEqual(balanceDAI, 0);
-    assert.notEqual(balanceLINK, 0);
-    assert.equal(contractBalance, 0);
-    assert(
-      fromWei(finalFeeRecipientBalance) > fromWei(intialFeeRecipientBalance)
-    );
-  });
-
 
 });
 

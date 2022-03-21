@@ -90,8 +90,6 @@ contract SwapperV1 is Initializable, AccessControlUpgradeable, UUPSUpgradeable{
         require(fromToken != destToken, "SAME_TOKEN");
         require(amount > 0, "ZERO-AMOUNT");
 
-
-
         IUniswapV2Exchange exchange = factory.getPair(fromToken, destToken);
         returnAmount = exchange.getReturn(fromToken, destToken, amount);
 

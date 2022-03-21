@@ -6,6 +6,9 @@ require("hardhat-gas-reporter");
 require("solidity-coverage");
 require('@openzeppelin/hardhat-upgrades');
 require('@nomiclabs/hardhat-truffle5');
+require("@nomiclabs/hardhat-ethers");
+require("hardhat-deploy"); 
+require("chai");
 
 
 
@@ -47,12 +50,52 @@ module.exports = {
       networkCheckTimeout: 50000, 
       skipDryRun: true   // add the account that will deploy the contract (private key)
      },
-   },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
+   },etherscan: {
+     apiKey:"BIWZIIKQEAWJH99I5ZSMZIGC2U8HFVFSMR",
+   },namedAccounts: {
+    deployer: 0,
+    feeRecipient: 1,
+    user: 2,
+  },gasReporter: {
     currency: "USD",
+    gasPrice: 50,
+    enabled: process.env.REPORT_GAS ? true : false,
+    coinmarketcap: process.env.CMC_API_KEY,
+    excludeContracts: ["mocks/"],
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
